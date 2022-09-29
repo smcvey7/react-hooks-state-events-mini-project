@@ -1,9 +1,23 @@
 import React from "react";
+import Task from "./Task";
 
-function TaskList() {
+function TaskList({ taskState, setTaskState, itemsToDisplay, setItemsToDisplay }) {
+
+  function handleRemove(completedTask){
+    const newList = taskState.filter((task) => task.text !== completedTask.id)
+    setTaskState(newList)
+    setItemsToDisplay(newList)
+  }
+
+  console.log("itemsToDisplay", itemsToDisplay)
+
   return (
     <div className="tasks">
-      {/* display a list of tasks using Task component */}
+      <ul id="taskList">
+        {itemsToDisplay.map((item) => (
+          <Task handleRemove={handleRemove} key={item.text} text={item.text} category={item.category} />
+          ))}
+      </ul>
     </div>
   );
 }
